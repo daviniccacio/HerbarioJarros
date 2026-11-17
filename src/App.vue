@@ -46,12 +46,12 @@ const filteredAndSortedSpecimens = computed(() => {
     const searchableContent = normalizeText(
       [
         item.collectionNumber,
-        item.scientificName,
+        item.scientificName ?? '',
         item.popularName,
         item.family,
         item.locality,
         item.collector,
-        item.contributor,
+        item.contributor ?? '',
         item.notes,
       ].join(' ')
     );
@@ -60,15 +60,18 @@ const filteredAndSortedSpecimens = computed(() => {
   });
 
   return [...filtered].sort((a, b) => {
+    const nameA = a.scientificName || a.popularName;
+    const nameB = b.scientificName || b.popularName;
+
     switch (sortBy.value) {
       case 'collection-desc':
         return b.collectionNumber.localeCompare(a.collectionNumber, 'pt-BR', { numeric: true });
       case 'scientific-asc':
-        return a.scientificName.localeCompare(b.scientificName, 'pt-BR');
+        return nameA.localeCompare(nameB, 'pt-BR');
       case 'family-asc':
         return (
           a.family.localeCompare(b.family, 'pt-BR') ||
-          a.scientificName.localeCompare(b.scientificName, 'pt-BR')
+          nameA.localeCompare(nameB, 'pt-BR')
         );
       case 'date-desc':
         return parseBrDate(b.date) - parseBrDate(a.date);

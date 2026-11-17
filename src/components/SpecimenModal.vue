@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import type { Specimen } from '@/types/specimen';
 
 const props = defineProps<{
@@ -22,11 +22,13 @@ const isFullscreen = ref(false);
 const imageFailed = ref(false);
 const zoomOrigin = ref({ x: 50, y: 50 });
 
-// Controle de gesto swipe no celular
 const touchStartX = ref(0);
 const touchStartY = ref(0);
 
-// Reseta zoom, tela cheia e estado da imagem ao trocar de planta
+const displayTitle = computed(
+  () => props.specimen?.scientificName || props.specimen?.popularName || ''
+);
+
 watch(
   () => props.specimen?.id,
   () => {
@@ -74,7 +76,6 @@ function handleModalTouchStart(event: TouchEvent) {
 }
 
 function handleModalTouchEnd(event: TouchEvent) {
-  // Não troca de planta se o usuário estiver inspecionando com a lupa ativa
   if (isZoomed.value) return;
   const touch = event.changedTouches[0];
   if (!touch) return;
@@ -127,12 +128,19 @@ function copySpecimenLink() {
 function copySpecimenCitation() {
   if (!props.specimen) return;
   const s = props.specimen;
+  const identificationLine = s.scientificName
+    ? `Espécie: ${s.scientificName} ("${s.popularName}")`
+    : `Nome Popular: ${s.popularName} (Espécie em identificação)`;
+  const teamLine = s.contributor
+    ? `Coletor: ${s.collector} | Acompanhante: ${s.contributor} | Data: ${s.date}`
+    : `Coletor: ${s.collector} | Data: ${s.date}`;
+
   const formatted = [
-    `Herbário Jarros (SDR) — UFMA`,
+    `Universidade Federal do Maranhão — Herbário do Jarros (HSRD)`,
     `Nº Coleta: ${s.collectionNumber} | Família: ${s.family}`,
-    `Espécie: ${s.scientificName} ("${s.popularName}")`,
+    identificationLine,
     `Localidade: ${s.locality}`,
-    `Coletor: ${s.collector} | Contribuidor: ${s.contributor} | Data: ${s.date}`,
+    teamLine,
     `Observações: ${s.notes}`,
   ].join('\n');
 
@@ -151,7 +159,7 @@ onUnmounted(() => window.removeEventListener('keydown', handleKeydown));
         class="fixed inset-0 z-50 flex items-center justify-center bg-ink/85 p-2.5 backdrop-blur-xs sm:p-6"
         role="dialog"
         aria-modal="true"
-        :aria-label="`Detalhes de ${props.specimen.scientificName}`"
+        :aria-label="`Detalhes de ${displayTitle}`"
         @click.self="emit('close')"
         @touchstart.passive="handleModalTouchStart"
         @touchend="handleModalTouchEnd"
@@ -172,45 +180,6 @@ onUnmounted(() => window.removeEventListener('keydown', handleKeydown));
           class="modal-panel relative max-h-[92dvh] w-full max-w-4xl overflow-y-auto rounded-sm bg-paper-card shadow-2xl transition-all duration-300"
           :class="isFullscreen ? 'md:grid-cols-1' : 'md:grid md:grid-cols-2'"
         >
-          <!-- Barra Flutuante de Controles no Topo da Imagem -->
-          <div class="absolute top-3 left-3 right-3 z-20 flex items-center justify-between gap-2 pointer-events-none">
-            <div class="flex items-center gap-1.5 pointer-events-auto">
-              <!-- Botão Lupa Botânica -->
-              <button
-                v-if="!imageFailed"
-                type="button"
-                class="cursor-pointer rounded-full px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider shadow-md backdrop-blur-xs transition-colors"
-                :class="
-                  isZoomed
-                    ? 'bg-botanical text-white font-semibold'
-                    : 'bg-ink/80 text-white hover:bg-botanical'
-                "
-                @click.stop="isZoomed = !isZoomed"
-              >
-                {{ isZoomed ? '🔍 Lupa 2.2x Ativa' : '🔍 Lupa' }}
-              </button>
-
-              <!-- Botão Modo Tela Cheia Pura -->
-              <button
-                type="button"
-                class="cursor-pointer rounded-full bg-ink/80 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-white shadow-md backdrop-blur-xs transition-colors hover:bg-botanical"
-                @click.stop="isFullscreen = !isFullscreen"
-              >
-                {{ isFullscreen ? 'Mostrar ficha' : 'Tela cheia' }}
-              </button>
-            </div>
-
-            <!-- Botão Fechar -->
-            <button
-              type="button"
-              aria-label="Fechar visualização"
-              class="pointer-events-auto flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-ink/85 font-mono text-sm text-white shadow-md transition-colors hover:bg-botanical"
-              @click="emit('close')"
-            >
-              ✕
-            </button>
-          </div>
-
           <!-- Área da Fotografia com Lupa Interativa -->
           <div
             class="relative flex items-center justify-center overflow-hidden bg-stone-900 select-none"
@@ -222,10 +191,48 @@ onUnmounted(() => window.removeEventListener('keydown', handleKeydown));
             @mousemove="handleImageMouseMove"
             @touchmove="handleImageTouchMove"
           >
+            <!-- Barra Flutuante sobre a Imagem -->
+            <div class="pointer-events-none absolute top-3 right-3 left-3 z-20 flex items-center justify-between gap-2">
+              <div class="pointer-events-auto flex items-center gap-1.5">
+                <button
+                  v-if="!imageFailed"
+                  type="button"
+                  class="cursor-pointer rounded-full px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider shadow-md backdrop-blur-xs transition-colors"
+                  :class="
+                    isZoomed
+                      ? 'bg-botanical text-white font-semibold'
+                      : 'bg-ink/80 text-white hover:bg-botanical'
+                  "
+                  @click.stop="isZoomed = !isZoomed"
+                >
+                  {{ isZoomed ? '🔍 Lupa 2.2x Ativa' : '🔍 Lupa' }}
+                </button>
+
+                <button
+                  type="button"
+                  class="cursor-pointer rounded-full bg-ink/80 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-white shadow-md backdrop-blur-xs transition-colors hover:bg-botanical"
+                  @click.stop="isFullscreen = !isFullscreen"
+                >
+                  {{ isFullscreen ? 'Mostrar ficha' : 'Tela cheia' }}
+                </button>
+              </div>
+
+              <!-- Botão Fechar (visível no celular ou quando estiver em Tela Cheia) -->
+              <button
+                type="button"
+                aria-label="Fechar visualização"
+                class="pointer-events-auto h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-ink/85 font-mono text-sm text-white shadow-md transition-colors hover:bg-botanical"
+                :class="isFullscreen ? 'flex' : 'flex md:hidden'"
+                @click.stop="emit('close')"
+              >
+                ✕
+              </button>
+            </div>
+
             <img
               v-if="!imageFailed"
               :src="props.specimen.imageUrl"
-              :alt="`Exsicata de ${props.specimen.scientificName}`"
+              :alt="`Exsicata de ${displayTitle}`"
               class="h-full w-full transition-transform duration-200 ease-out"
               :class="isFullscreen ? 'object-contain' : 'object-cover'"
               :style="{
@@ -235,17 +242,20 @@ onUnmounted(() => window.removeEventListener('keydown', handleKeydown));
               @error="imageFailed = true"
             />
 
-            <!-- Fallback caso a imagem ainda não exista -->
             <div
               v-else
               class="flex h-full min-h-72 w-full flex-col items-center justify-center bg-botanical-light p-8 text-center text-botanical"
             >
-              <span class="font-mono text-xs uppercase tracking-widest">Fotografia da Exsicata</span>
-              <span class="mt-1 font-display text-3xl italic">{{ props.specimen.scientificName }}</span>
+              <span class="font-mono text-xs uppercase tracking-widest">{{ props.specimen.family }}</span>
+              <span
+                class="mt-1 font-display text-3xl"
+                :class="{ italic: Boolean(props.specimen.scientificName) }"
+              >
+                {{ displayTitle }}
+              </span>
               <span class="mt-2 font-mono text-xs text-muted">{{ props.specimen.imageUrl }}</span>
             </div>
 
-            <!-- Dica discreta na base da foto -->
             <span
               v-if="!imageFailed"
               class="pointer-events-none absolute bottom-3 left-3 rounded bg-ink/70 px-2.5 py-1 font-mono text-[10px] text-white/90 backdrop-blur-xs"
@@ -253,48 +263,81 @@ onUnmounted(() => window.removeEventListener('keydown', handleKeydown));
               {{ isZoomed ? 'Mova para inspecionar · Clique para sair' : 'Clique na foto para ativar a lupa' }}
             </span>
 
-            <!-- Legenda discreta no Modo Tela Cheia Pura -->
             <div
               v-if="isFullscreen"
-              class="pointer-events-none absolute bottom-3 right-3 rounded bg-ink/80 px-3 py-1.5 text-right text-white backdrop-blur-xs"
+              class="pointer-events-none absolute right-3 bottom-3 rounded bg-ink/80 px-3 py-1.5 text-right text-white backdrop-blur-xs"
             >
-              <p class="font-display text-lg italic leading-tight">{{ props.specimen.scientificName }}</p>
+              <p
+                class="font-display text-lg leading-tight"
+                :class="{ italic: Boolean(props.specimen.scientificName) }"
+              >
+                {{ displayTitle }}
+              </p>
               <p class="font-mono text-[10px] uppercase tracking-widest text-white/80">
                 {{ props.specimen.collectionNumber }} · {{ props.specimen.family }}
               </p>
             </div>
           </div>
 
-          <!-- Painel Direito: Ficha Catalográfica (oculto no Modo Tela Cheia Pura) -->
+          <!-- Painel Direito: Ficha Catalográfica -->
           <div v-if="!isFullscreen" class="flex flex-col justify-between p-5 sm:p-7">
             <div>
-              <div class="flex items-center justify-between border-b-2 border-ink pb-2">
-                <span class="font-mono text-xs uppercase tracking-widest">Herbário Jarros · SDR</span>
-                <span class="font-mono text-xs font-semibold text-botanical">
-                  Nº {{ props.specimen.collectionNumber }}
+              <!-- Cabeçalho da Ficha com o Botão Fechar alinhado no Desktop -->
+              <div class="flex items-center justify-between gap-3 border-b-2 border-ink pb-2.5">
+                <span class="font-mono text-xs uppercase tracking-widest text-ink">
+                  Herbário do Jarros · HSRD
                 </span>
+
+                <div class="flex shrink-0 items-center gap-3">
+                  <span class="font-mono text-xs font-semibold text-botanical">
+                    Nº {{ props.specimen.collectionNumber }}
+                  </span>
+
+                  <button
+                    type="button"
+                    aria-label="Fechar visualização"
+                    title="Fechar (ESC)"
+                    class="hidden h-8 w-8 cursor-pointer items-center justify-center rounded-full border border-ink/15 bg-paper font-mono text-xs text-ink transition-colors hover:border-botanical hover:bg-botanical hover:text-white md:flex"
+                    @click="emit('close')"
+                  >
+                    ✕
+                  </button>
+                </div>
               </div>
 
               <p class="mt-4 font-mono text-xs uppercase tracking-widest text-botanical">
                 {{ props.specimen.family }}
               </p>
-              <h2 class="mt-1 font-display text-3xl font-bold italic text-ink">
-                {{ props.specimen.scientificName }}
-              </h2>
-              <p class="text-base text-muted">“{{ props.specimen.popularName }}”</p>
+
+              <template v-if="props.specimen.scientificName">
+                <h2 class="mt-1 font-display text-3xl font-bold italic text-ink">
+                  {{ props.specimen.scientificName }}
+                </h2>
+                <p class="text-base text-muted">“{{ props.specimen.popularName }}”</p>
+              </template>
+
+              <template v-else>
+                <h2 class="mt-1 font-display text-3xl font-bold text-ink">
+                  {{ props.specimen.popularName }}
+                </h2>
+                <p class="font-mono text-xs italic text-muted">Espécie em identificação</p>
+              </template>
 
               <dl class="mt-5 divide-y divide-dashed divide-border-dashed border-y border-dashed border-border-dashed text-sm">
                 <div class="py-2">
                   <dt class="font-mono text-[10px] uppercase tracking-wider text-muted">Localidade</dt>
                   <dd class="mt-0.5 text-ink">{{ props.specimen.locality }}</dd>
                 </div>
-                <div class="grid grid-cols-2 gap-3 py-2">
+                <div
+                  class="grid gap-3 py-2"
+                  :class="props.specimen.contributor ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1'"
+                >
                   <div>
                     <dt class="font-mono text-[10px] uppercase tracking-wider text-muted">Coletor</dt>
                     <dd class="mt-0.5 text-ink">{{ props.specimen.collector }}</dd>
                   </div>
-                  <div>
-                    <dt class="font-mono text-[10px] uppercase tracking-wider text-muted">Contribuidor</dt>
+                  <div v-if="props.specimen.contributor">
+                    <dt class="font-mono text-[10px] uppercase tracking-wider text-muted">Acompanhante</dt>
                     <dd class="mt-0.5 text-ink">{{ props.specimen.contributor }}</dd>
                   </div>
                 </div>
@@ -326,7 +369,7 @@ onUnmounted(() => window.removeEventListener('keydown', handleKeydown));
                 </button>
               </div>
 
-              <!-- Barra de Navegação Anterior / Próxima (Mobile e Tablet) -->
+              <!-- Barra de Navegação Anterior / Próxima -->
               <div class="mt-4 flex items-center justify-between border-t border-ink/10 pt-3">
                 <button
                   type="button"

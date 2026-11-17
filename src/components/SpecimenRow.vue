@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import type { Specimen } from '@/types/specimen';
 import { useScrollReveal } from '@/composables/useScrollReveal';
 
@@ -12,12 +12,16 @@ const emit = defineEmits<{
 }>();
 
 const imageFailed = ref(false);
-const { elementRef, isVisible } = useScrollReveal();
+const { observeElement, isVisible } = useScrollReveal();
+
+const displayTitle = computed(
+  () => props.specimen.scientificName || props.specimen.popularName
+);
 </script>
 
 <template>
   <article
-    ref="elementRef"
+    :ref="observeElement"
     class="transition-all duration-500 ease-out"
     :class="isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'"
   >
@@ -31,16 +35,16 @@ const { elementRef, isVisible } = useScrollReveal();
         <img
           v-if="!imageFailed"
           :src="props.specimen.imageUrl"
-          :alt="`Miniatura de ${props.specimen.scientificName}`"
+          :alt="`Miniatura de ${displayTitle}`"
           loading="lazy"
           class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           @error="imageFailed = true"
         />
         <div
           v-else
-          class="flex h-full w-full items-center justify-center p-1 text-center font-mono text-[9px] uppercase text-botanical"
+          class="flex h-full w-full items-center justify-center p-1 text-center font-mono text-[9px] font-semibold uppercase text-botanical"
         >
-          SDR
+          HSRD
         </div>
       </div>
 
@@ -58,20 +62,30 @@ const { elementRef, isVisible } = useScrollReveal();
           </span>
         </div>
 
-        <h2 class="mt-0.5 truncate font-display text-xl font-bold italic text-ink sm:text-2xl">
-          {{ props.specimen.scientificName }}
+        <h2
+          class="mt-0.5 truncate font-display text-xl font-bold text-ink sm:text-2xl"
+          :class="{ italic: Boolean(props.specimen.scientificName) }"
+        >
+          {{ displayTitle }}
         </h2>
 
         <p class="truncate text-xs text-muted sm:text-sm">
-          “{{ props.specimen.popularName }}” — {{ props.specimen.locality }}
+          <template v-if="props.specimen.scientificName">
+            “{{ props.specimen.popularName }}” — {{ props.specimen.locality }}
+          </template>
+          <template v-else>
+            {{ props.specimen.locality }}
+          </template>
         </p>
 
         <p class="mt-1 truncate font-mono text-[11px] text-muted/90">
-          Coletor: {{ props.specimen.collector }} · Contrib.: {{ props.specimen.contributor }}
+          Coletor: {{ props.specimen.collector }}
+          <template v-if="props.specimen.contributor">
+            · Acomp.: {{ props.specimen.contributor }}
+          </template>
         </p>
       </div>
 
-      <!-- Indicador de abertura -->
       <span
         class="hidden shrink-0 rounded-sm border border-ink/15 bg-paper px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-wider text-ink transition-colors group-hover:border-botanical group-hover:bg-botanical group-hover:text-white sm:inline-block"
       >

@@ -1,17 +1,25 @@
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onUnmounted, ref, type ComponentPublicInstance } from 'vue';
 
 export function useScrollReveal() {
-  const elementRef = ref<HTMLElement | null>(null);
   const isVisible = ref(false);
   let observer: IntersectionObserver | null = null;
 
-  onMounted(() => {
-    // Se o navegador não suportar IntersectionObserver, exibe imediatamente
-    if (typeof IntersectionObserver === 'undefined') {
+  function observeElement(el: Element | ComponentPublicInstance | null) {
+    if (!el || isVisible.value) return;
+
+    const target =
+      el instanceof HTMLElement
+        ? el
+        : '$el' in el && el.$el instanceof HTMLElement
+          ? el.$el
+          : null;
+
+    if (!target || typeof IntersectionObserver === 'undefined') {
       isVisible.value = true;
       return;
     }
 
+    observer?.disconnect();
     observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -28,19 +36,15 @@ export function useScrollReveal() {
       }
     );
 
-    if (elementRef.value) {
-      observer.observe(elementRef.value);
-    } else {
-      isVisible.value = true;
-    }
-  });
+    observer.observe(target);
+  }
 
   onUnmounted(() => {
     observer?.disconnect();
   });
 
   return {
-    elementRef,
+    observeElement,
     isVisible,
   };
 }
