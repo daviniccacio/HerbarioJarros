@@ -10,7 +10,7 @@ export type SortOption =
 
 export type ViewMode = 'grid' | 'compact';
 
-// Agora o cabeçalho recebe apenas as configurações de ordenação e modo de exibição
+// Recebe as configurações atuais de ordenação e modo de exibição
 defineProps<{
   sortBy: SortOption;
   viewMode: ViewMode;
@@ -44,25 +44,27 @@ const ufmaLogoMissing = ref(false);
           v-if="!ufmaLogoMissing"
           src="/logos/logo-ufma.png"
           alt="Logo da Universidade Federal do Maranhão (UFMA)"
-          class="h-11 w-auto shrink-0 object-contain sm:h-14"
+          class="h-12 w-auto shrink-0 object-contain sm:h-15"
           @error="ufmaLogoMissing = true"
         />
       </div>
 
-      <!-- 2. Bloco Principal: Logo do Herbário + Título + Autoria -->
-      <div class="mt-6 flex items-start gap-3.5 sm:gap-4">
+      <!-- 2. Bloco Principal: Logo do Herbário em Destaque + Título + Autoria -->
+      <div class="mt-6 flex flex-col items-start gap-4 sm:mt-7 sm:flex-row sm:items-center sm:gap-6">
+        <!-- Moldura de Selo Botânico para a Logo do Herbário -->
         <div
-          class="mt-1 flex h-13 w-13 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-botanical/25 bg-botanical-light text-botanical shadow-xs sm:h-16 sm:w-16"
+          class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-botanical/25 bg-white p-1.5 shadow-sm ring-1 ring-ink/5 transition-transform duration-300 hover:scale-[1.02] sm:h-28 sm:w-28 sm:p-2 md:h-32 md:w-32"
         >
           <img
             v-if="!herbariumLogoMissing"
-            alt="Logo do Herbário do Jarros"
-            class="h-full w-full object-contain p-1.5"
+            src="/logos/herbario.png"
+            alt="Logo oficial do Herbário do Jarros (HBSRD)"
+            class="h-full w-full object-contain"
             @error="herbariumLogoMissing = true"
           />
           <svg
             v-else
-            class="h-8 w-8 sm:h-9 sm:w-9"
+            class="h-11 w-11 text-botanical sm:h-14 sm:w-14"
             viewBox="0 0 36 36"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +91,7 @@ const ufmaLogoMissing = ref(false);
           </svg>
         </div>
 
-        <div>
+        <div class="min-w-0">
           <h1 class="font-display text-4xl leading-none font-bold tracking-tight text-ink sm:text-6xl md:text-7xl">
             Herbário do <em class="font-semibold text-botanical">Jarros</em>
           </h1>
