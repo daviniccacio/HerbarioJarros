@@ -1,7 +1,20 @@
 [build]
-  command = "pnpm run build"
+  # Comando executado pelo Netlify para gerar o site
+  command = "pnpm build"
+  # Pasta gerada pelo Vite com os arquivos prontos para produção
   publish = "dist"
 
+[build.environment]
+  # Garante uma versão moderna do Node.js compatível com Vite e pnpm
+  NODE_VERSION = "22"
+
+# Redirecionamento padrão para aplicações SPA (Vue/Vite)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Cache otimizado para as fotografias das exsicatas
 [[headers]]
   for = "/images/*"
   [headers.values]
