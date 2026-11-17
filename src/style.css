@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --color-paper: #f6f3ec;
+  --color-paper-card: #fcfaf5;
+  --color-ink: #1b221c;
+  --color-botanical: #285238;
+  --color-botanical-light: #e7efe9;
+  --color-muted: #5a635c;
+  --color-border-dashed: #cfc8b8;
+}
+
+/* Fundo com textura sutil de papel de arquivo */
+.paper-bg {
+  background-color: var(--color-paper);
+  background-image: radial-gradient(rgba(27, 34, 28, 0.04) 1px, transparent 0);
+  background-size: 20px 20px;
+}
+
+/* Estilo da etiqueta botânica sobreposta à foto */
+.label-tag {
+  background-color: var(--color-paper-card);
+  border: 1px solid rgba(27, 34, 28, 0.16);
+  box-shadow:
+    0 12px 28px -10px rgba(27, 34, 28, 0.16),
+    0 2px 6px -1px rgba(27, 34, 28, 0.06);
+}
