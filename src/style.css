@@ -21,11 +21,80 @@
   background-size: 20px 20px;
 }
 
-/* Estilo da etiqueta botânica sobreposta à foto */
+/* Etiqueta botânica com micro-elevação tátil ao interagir */
 .label-tag {
   background-color: var(--color-paper-card);
   border: 1px solid rgba(27, 34, 28, 0.16);
   box-shadow:
     0 12px 28px -10px rgba(27, 34, 28, 0.16),
     0 2px 6px -1px rgba(27, 34, 28, 0.06);
+  transition:
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.32s ease;
+}
+
+.group:hover .label-tag,
+.group:focus-within .label-tag {
+  transform: translateY(-5px);
+  border-color: rgba(40, 82, 56, 0.35);
+  box-shadow:
+    0 20px 36px -12px rgba(27, 34, 28, 0.24),
+    0 4px 10px -2px rgba(40, 82, 56, 0.12);
+}
+
+/* 1. Transição animada na grade (TransitionGroup FLIP) */
+.gallery-move,
+.gallery-enter-active,
+.gallery-leave-active {
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.35s ease;
+}
+
+.gallery-enter-from,
+.gallery-leave-to {
+  opacity: 0;
+  transform: translateY(14px) scale(0.97);
+}
+
+.gallery-leave-active {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* 2. Abertura física do modal (Transition) */
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.28s ease;
+}
+
+.modal-enter-active .modal-panel,
+.modal-leave-active .modal-panel {
+  transition:
+    transform 0.34s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.28s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-from .modal-panel,
+.modal-leave-to .modal-panel {
+  opacity: 0;
+  transform: translateY(16px) scale(0.95);
+}
+
+/* Acessibilidade: desativa animações se o usuário preferir movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
