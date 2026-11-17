@@ -21,10 +21,11 @@ const displayTitle = computed(
   () => props.specimen.scientificName || props.specimen.popularName
 );
 
+// Sincroniza o efeito cascata da animação para fileiras de 3 em 3 cartões
 const staggerStyle = computed(() => {
   if (isVisible.value) return undefined;
-  const step = (props.index ?? 0) % 4;
-  return { transitionDelay: `${step * 70}ms` };
+  const step = (props.index ?? 0) % 3;
+  return { transitionDelay: `${step * 80}ms` };
 });
 </script>
 
@@ -88,12 +89,12 @@ const staggerStyle = computed(() => {
       </span>
     </button>
 
-    <!-- Etiqueta Botânica Sobreposta -->
-    <div class="relative z-10 -mt-14 px-2.5 pb-2 sm:-mt-22 sm:ml-auto sm:w-[90%] sm:px-4">
-      <div class="label-tag rounded-xs p-4 sm:p-5">
+    <!-- Etiqueta Botânica Sobreposta (ajustada para 3 colunas) -->
+    <div class="relative z-10 -mt-14 px-2.5 pb-2 sm:-mt-20 sm:ml-auto sm:w-[94%] sm:px-3 lg:px-2">
+      <div class="label-tag rounded-xs p-4 sm:p-5 lg:p-4">
         <!-- Cabeçalho da Etiqueta -->
         <div class="mb-2 flex flex-wrap items-center justify-between gap-1 border-b-2 border-ink pb-1.5">
-          <span class="font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-ink sm:text-[11px]">
+          <span class="font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-ink">
             Herbário do Jarros · HSRD
           </span>
           <span class="font-mono text-xs font-semibold text-botanical">
@@ -107,7 +108,7 @@ const staggerStyle = computed(() => {
         </p>
 
         <template v-if="props.specimen.scientificName">
-          <h2 class="mt-0.5 font-display text-2xl leading-tight font-bold italic text-ink sm:text-[26px]">
+          <h2 class="mt-0.5 font-display text-2xl leading-tight font-bold italic text-ink lg:text-[23px]">
             {{ props.specimen.scientificName }}
           </h2>
           <p class="mb-3 text-sm text-muted">
@@ -116,7 +117,7 @@ const staggerStyle = computed(() => {
         </template>
 
         <template v-else>
-          <h2 class="mt-0.5 font-display text-2xl leading-tight font-bold text-ink sm:text-[26px]">
+          <h2 class="mt-0.5 font-display text-2xl leading-tight font-bold text-ink lg:text-[23px]">
             {{ props.specimen.popularName }}
           </h2>
           <p class="mb-3 font-mono text-[11px] italic text-muted">
@@ -126,15 +127,15 @@ const staggerStyle = computed(() => {
 
         <!-- Metadados de Coleta -->
         <dl class="divide-y divide-dashed divide-border-dashed border-t border-dashed border-border-dashed text-sm">
-          <div class="grid grid-cols-1 gap-0.5 py-1.5 min-[360px]:grid-cols-[7.25rem_1fr] min-[360px]:gap-2">
-            <dt class="pt-0.5 font-mono text-[10px] uppercase tracking-wider text-muted sm:text-[11px]">
+          <div class="grid grid-cols-1 gap-0.5 py-1.5 min-[360px]:grid-cols-[6.5rem_1fr] min-[360px]:gap-2">
+            <dt class="pt-0.5 font-mono text-[10px] uppercase tracking-wider text-muted">
               Localidade
             </dt>
             <dd class="leading-snug text-ink">{{ props.specimen.locality }}</dd>
           </div>
 
-          <div class="grid grid-cols-1 gap-0.5 py-1.5 min-[360px]:grid-cols-[7.25rem_1fr] min-[360px]:gap-2">
-            <dt class="pt-0.5 font-mono text-[10px] uppercase tracking-wider text-muted sm:text-[11px]">
+          <div class="grid grid-cols-1 gap-0.5 py-1.5 min-[360px]:grid-cols-[6.5rem_1fr] min-[360px]:gap-2">
+            <dt class="pt-0.5 font-mono text-[10px] uppercase tracking-wider text-muted">
               Coletor
             </dt>
             <dd class="text-ink">{{ props.specimen.collector }}</dd>
@@ -142,23 +143,23 @@ const staggerStyle = computed(() => {
 
           <div
             v-if="props.specimen.contributor"
-            class="grid grid-cols-1 gap-0.5 py-1.5 min-[360px]:grid-cols-[7.25rem_1fr] min-[360px]:gap-2"
+            class="grid grid-cols-1 gap-0.5 py-1.5 min-[360px]:grid-cols-[6.5rem_1fr] min-[360px]:gap-2"
           >
-            <dt class="pt-0.5 font-mono text-[10px] uppercase tracking-wider text-muted sm:text-[11px]">
+            <dt class="pt-0.5 font-mono text-[10px] uppercase tracking-wider text-muted">
               Acompanhante
             </dt>
             <dd class="text-ink">{{ props.specimen.contributor }}</dd>
           </div>
 
-          <div class="grid grid-cols-1 gap-0.5 py-1.5 min-[360px]:grid-cols-[7.25rem_1fr] min-[360px]:gap-2">
-            <dt class="pt-0.5 font-mono text-[10px] uppercase tracking-wider text-muted sm:text-[11px]">
+          <div class="grid grid-cols-1 gap-0.5 py-1.5 min-[360px]:grid-cols-[6.5rem_1fr] min-[360px]:gap-2">
+            <dt class="pt-0.5 font-mono text-[10px] uppercase tracking-wider text-muted">
               Data
             </dt>
             <dd class="font-mono text-xs text-ink sm:text-sm">{{ props.specimen.date }}</dd>
           </div>
 
-          <div class="grid grid-cols-1 gap-0.5 py-1.5 min-[360px]:grid-cols-[7.25rem_1fr] min-[360px]:gap-2">
-            <dt class="pt-0.5 font-mono text-[10px] uppercase tracking-wider text-muted sm:text-[11px]">
+          <div class="grid grid-cols-1 gap-0.5 py-1.5 min-[360px]:grid-cols-[6.5rem_1fr] min-[360px]:gap-2">
+            <dt class="pt-0.5 font-mono text-[10px] uppercase tracking-wider text-muted">
               Observações
             </dt>
             <dd class="leading-snug text-ink">{{ props.specimen.notes }}</dd>
