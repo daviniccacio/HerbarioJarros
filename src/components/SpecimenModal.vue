@@ -138,7 +138,7 @@ function copySpecimenCitation() {
     : `Coletor: ${s.collector} | Data: ${s.date}`;
 
   const formatted = [
-    `Universidade Federal do Maranhão — Herbário do Jarros (HSRD)`,
+    `Universidade Federal do Maranhão — Herbário do Jarros (HBSRD)`,
     `Nº Coleta: ${s.collectionNumber} | Família: ${s.family}`,
     identificationLine,
     `Localidade: ${s.locality}`,
@@ -342,7 +342,7 @@ onUnmounted(() => window.removeEventListener('keydown', handleKeydown));
                 <!-- Cabeçalho da Ficha -->
                 <div class="flex items-center justify-between gap-3 border-b-2 border-ink pb-2">
                   <span class="font-mono text-[11px] uppercase tracking-widest text-ink sm:text-xs">
-                    Herbário do Jarros · HSRD
+                    Herbário do Jarros · HBSRD
                   </span>
 
                   <div class="flex shrink-0 items-center gap-3">

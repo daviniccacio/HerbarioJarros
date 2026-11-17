@@ -95,7 +95,7 @@ const ufmaLogoMissing = ref(false);
           </h1>
           <p class="mt-2.5 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
             Acervo digital de exsicatas coletadas e catalogadas. Cada espécime acompanha sua etiqueta botânica oficial — sigla
-            <strong class="font-semibold text-ink">HSRD</strong>.
+            <strong class="font-semibold text-ink">HBSRD</strong>.
           </p>
           <p class="mt-2 font-mono text-xs text-botanical">
             Projeto e curadoria: <strong class="font-semibold text-ink">Sofia Oliveira Pinheiro</strong>

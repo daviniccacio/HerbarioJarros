@@ -7,7 +7,7 @@ withDefaults(
     subtitle?: string;
   }>(),
   {
-    title: 'Herbário do Jarros (HSRD) · Universidade Federal do Maranhão',
+    title: 'Herbário do Jarros (HBSRD) · Universidade Federal do Maranhão',
     subtitle: 'Projeto de Botânica — Curso de Ciências Biológicas · São Luís, MA',
   }
 );

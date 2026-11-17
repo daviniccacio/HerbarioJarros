@@ -95,7 +95,7 @@ const staggerStyle = computed(() => {
         <!-- Cabeçalho da Etiqueta -->
         <div class="mb-2 flex flex-wrap items-center justify-between gap-1 border-b-2 border-ink pb-1.5">
           <span class="font-mono text-[10px] font-medium uppercase tracking-[0.14em] text-ink">
-            Herbário do Jarros · HSRD
+            Herbário do Jarros · HBSRD
           </span>
           <span class="font-mono text-xs font-semibold text-botanical">
             Nº {{ props.specimen.collectionNumber }}

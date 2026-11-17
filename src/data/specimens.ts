@@ -11,7 +11,7 @@ export const specimens: Specimen[] = [
     contributor: 'João Frederico Serra',
     date: '29/09/2026',
     notes: 'Arbusto, flores vermelhas numerosas, folhas verdes simples.',
-    imageUrl: '/images/hsrd-0001-rubiaceae.jpg',
+    imageUrl: '/images/HBSRD-0001.jpeg',
   },
   {
     id: 'hsrd-0002',
@@ -23,7 +23,7 @@ export const specimens: Specimen[] = [
     contributor: 'João Frederico Serra',
     date: '29/09/2026',
     notes: 'Planta arbórea, flores grandes cor de rosa avermelhadas, estames compridos, folhas verdes.',
-    imageUrl: '/images/hsrd-0002-malvaceae.jpg',
+    imageUrl: '/images/HBSRD-0002.jpeg',
   },
   {
     id: 'hsrd-0003',
@@ -35,7 +35,7 @@ export const specimens: Specimen[] = [
     contributor: 'João Frederico Serra',
     date: '29/09/2026',
     notes: 'Planta arbustiva, flores roxas tubulares, centro amarelado, folhas verde-escuro.',
-    imageUrl: '/images/hsrd-0003-acanthaceae.jpg',
+    imageUrl: '/images/HBSRD-0003.jpeg',
   },
   {
     id: 'hsrd-0004',
@@ -47,7 +47,7 @@ export const specimens: Specimen[] = [
     contributor: 'João Frederico Serra',
     date: '29/09/2026',
     notes: 'Planta rasteira, fruto com penachos brancos sedosos, flores com pétalas brancas, miolo amarelado.',
-    imageUrl: '/images/hsrd-0004-asteraceae.jpg',
+    imageUrl: '/images/HBSRD-0004.jpeg',
   },
   {
     id: 'hsrd-0005',
@@ -59,7 +59,7 @@ export const specimens: Specimen[] = [
     contributor: 'João Frederico Serra',
     date: '29/09/2026',
     notes: 'Arbusto com flores pequenas e azuis com estames amarelos, folhas verdes pequenas.',
-    imageUrl: '/images/hsrd-0005-asphodelaceae.jpg',
+    imageUrl: '/images/HBSRD-0005.jpeg',
   },
   {
     id: 'hsrd-0006',
@@ -71,7 +71,7 @@ export const specimens: Specimen[] = [
     contributor: 'João Frederico Serra',
     date: '05/10/2026',
     notes: 'Erva liana de cor laranja, flores pequenas e amarelas alaranjadas.',
-    imageUrl: '/images/hsrd-0006-lauraceae.jpg',
+    imageUrl: '/images/HBSRD-0006.jpeg',
   },
   {
     id: 'hsrd-0007',
@@ -83,7 +83,7 @@ export const specimens: Specimen[] = [
     contributor: 'João Frederico Serra',
     date: '05/10/2026',
     notes: 'Planta arbórea, flores cor de laranja numerosas e pequenas, frutos pequenos, folhas coriáceas.',
-    imageUrl: '/images/hsrd-0007-malphigiaceae.jpg',
+    imageUrl: '/images/HBSRD-0007.jpeg',
   },
   {
     id: 'hsrd-0008',
@@ -95,7 +95,7 @@ export const specimens: Specimen[] = [
     contributor: 'João Frederico Serra',
     date: '05/10/2026',
     notes: 'Planta arbórea, árvore grande, flores pequenas rosadas agrupadas em cachos, pseudofrutos com cheiro doce.',
-    imageUrl: '/images/hsrd-0008-anacardiaceae.jpg',
+    imageUrl: '/images/HBSRD-0008.jpeg',
   },
   {
     id: 'hsrd-0009',
@@ -107,7 +107,7 @@ export const specimens: Specimen[] = [
     contributor: 'João Frederico Serra',
     date: '27/10/2026',
     notes: 'Arbusto, inflorescência em espiga na cor amarela, sem sépala e pétala.',
-    imageUrl: '/images/hsrd-0009-piperaceae.jpg',
+    imageUrl: '/images/HBSRD-0009.jpeg',
   },
   {
     id: 'hsrd-0011',
@@ -119,7 +119,7 @@ export const specimens: Specimen[] = [
     contributor: 'João Frederico Serra',
     date: '27/10/2026',
     notes: 'Árvore média, flores roxas, flor com formato semelhante a uma concha aberta, frutos em vagens, folhas verdes brilhantes.',
-    imageUrl: '/images/hsrd-0011-fabaceae.jpg',
+    imageUrl: '/images/HBSRD-0011.jpeg',
   },
   {
     id: 'hsrd-0012',
@@ -131,7 +131,7 @@ export const specimens: Specimen[] = [
     contributor: 'João Frederico Serra',
     date: '30/10/2026',
     notes: 'Herbácea, folhas verdes brilhantes com aspecto de couro em formato de coração, bráctea rosada, espádice amarela avermelhada.',
-    imageUrl: '/images/hsrd-0012-araceae.jpg',
+    imageUrl: '/images/HBSRD-0012.jpeg',
   },
   {
     id: 'hsrd-0013',
@@ -142,7 +142,7 @@ export const specimens: Specimen[] = [
     collector: 'Sofia Oliveira',
     date: '30/10/2026',
     notes: 'Erva, folhas roxas azul-esverdeadas, folhas triangulares, flores brancas e pequenas, delicadas.',
-    imageUrl: '/images/hsrd-0013-oxalidaceae.jpg',
+    imageUrl: '/images/HBSRD-0013.jpeg',
   },
   {
     id: 'hsrd-0014',
@@ -154,7 +154,7 @@ export const specimens: Specimen[] = [
     contributor: 'João Frederico Serra, Davi Nicacio',
     date: '02/11/2026',
     notes: 'Arbusto com flores pequenas cor de rosa com estames roxos, muitas flores agrupadas no final dos galhos.',
-    imageUrl: '/images/hsrd-0014-plantaginaceae.jpg',
+    imageUrl: '/images/HBSRD-0014.jpeg',
   },
   {
     id: 'hsrd-0015',
@@ -166,7 +166,7 @@ export const specimens: Specimen[] = [
     contributor: 'João Frederico Serra, Davi Nicacio',
     date: '02/11/2026',
     notes: 'Vinha com folhas verdes, flor vermelha com cor intensa, chamativa, cheiro doce.',
-    imageUrl: '/images/hsrd-0015-passifloraceae.jpg',
+    imageUrl: '/images/HBSRD-0015.jpeg',
   },
   {
     id: 'hsrd-0016',
@@ -178,7 +178,7 @@ export const specimens: Specimen[] = [
     contributor: 'João Frederico Serra, Davi Nicacio',
     date: '02/11/2026',
     notes: 'Árvore grande, flores brancas e rosadas, flores perfumadas, folhas grandes.',
-    imageUrl: '/images/hsrd-0016-myrtaceae.jpg',
+    imageUrl: '/images/HBSRD-0016.jpeg',
   },
   {
     id: 'hsrd-0017',
@@ -190,7 +190,7 @@ export const specimens: Specimen[] = [
     contributor: 'João Frederico Serra',
     date: '02/11/2026',
     notes: 'Gramínea, folha verde longa, planta com aparência seca, espiga com “espinhos”, inflorescência amarelada.',
-    imageUrl: '/images/hsrd-0017-poeaceae.jpg',
+    imageUrl: '/images/HBSRD-0017.jpeg',
   },
   {
     id: 'hsrd-0018',
@@ -202,7 +202,7 @@ export const specimens: Specimen[] = [
     contributor: 'João Frederico Serra, Davi Nicacio',
     date: '02/11/2026',
     notes: 'Planta com aparência seca e amarelada, flores pequenas e amarelas.',
-    imageUrl: '/images/hsrd-0018-orchidaceae.jpg',
+    imageUrl: '/images/HBSRD-0018.jpeg',
   },
   {
     id: 'hsrd-0019',
@@ -213,7 +213,7 @@ export const specimens: Specimen[] = [
     collector: 'Sofia Oliveira',
     date: '04/11/2026',
     notes: 'Árvore, flores roxas chamativas, cálice lilás azulado, perfumadas.',
-    imageUrl: '/images/hsrd-0019-verbenaceae.jpg',
+    imageUrl: '/images/HBSRD-0019.jpeg',
   },
   {
     id: 'hsrd-0020',
@@ -224,7 +224,7 @@ export const specimens: Specimen[] = [
     collector: 'Sofia Oliveira',
     date: '04/11/2026',
     notes: 'Arbusto, folha serrilhada verde com textura áspera, acúleos no caule, flores com pétalas delicadas cor de rosa avermelhadas, perfumada.',
-    imageUrl: '/images/hsrd-0020-rosaceae.jpg',
+    imageUrl: '/images/HBSRD-0020.jpeg',
   },
   {
     id: 'hsrd-0022',
@@ -236,7 +236,7 @@ export const specimens: Specimen[] = [
     contributor: 'João Frederico Serra',
     date: '27/10/2026',
     notes: 'Árvore grande, flores brancas em formato de sino.',
-    imageUrl: '/images/hsrd-0022-bignoniaceae.jpg',
+    imageUrl: '/images/HBSRD-0022.jpeg',
   },
   {
     id: 'hsrd-0023',
@@ -247,6 +247,6 @@ export const specimens: Specimen[] = [
     collector: 'Sofia Oliveira',
     date: '11/11/2026',
     notes: 'Planta herbácea média, flores cor de rosa amareladas, folhas longas verdes em formato de fita, sem folhas na haste floral.',
-    imageUrl: '/images/hsrd-0023-amaryllidaceae.jpg',
+    imageUrl: '/images/HBSRD-0023.jpeg',
   },
 ];

@@ -44,7 +44,7 @@ const displayTitle = computed(
           v-else
           class="flex h-full w-full items-center justify-center p-1 text-center font-mono text-[9px] font-semibold uppercase text-botanical"
         >
-          HSRD
+          HBSRD
         </div>
       </div>
 
