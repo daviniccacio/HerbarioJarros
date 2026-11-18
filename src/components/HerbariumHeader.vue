@@ -49,22 +49,24 @@ const ufmaLogoMissing = ref(false);
         />
       </div>
 
-      <!-- 2. Bloco Principal: Logo do Herbário em Destaque + Título + Autoria -->
+      <!-- 2. Bloco Principal: Logo Redonda do Herbário + Título + Autoria -->
       <div class="mt-6 flex flex-col items-start gap-4 sm:mt-7 sm:flex-row sm:items-center sm:gap-6">
-        <!-- Moldura de Selo Botânico para a Logo do Herbário -->
+        <!-- Logo do Herbário sem borda quadrada, seguindo o mesmo estilo limpo da logo da UFMA -->
+        <img
+          v-if="!herbariumLogoMissing"
+          src="/logos/herbariojarros.png"
+          alt="Logo oficial do Herbário do Jarros (HBSRD)"
+          class="h-22 w-22 shrink-0 rounded-full object-contain transition-transform duration-300 hover:scale-[1.03] sm:h-28 sm:w-28 md:h-32 md:w-32"
+          @error="herbariumLogoMissing = true"
+        />
+
+        <!-- Ícone de reserva redondo caso a imagem não seja encontrada -->
         <div
-          class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-botanical/25 bg-white p-1.5 shadow-sm ring-1 ring-ink/5 transition-transform duration-300 hover:scale-[1.02] sm:h-28 sm:w-28 sm:p-2 md:h-32 md:w-32"
+          v-else
+          class="flex h-22 w-22 shrink-0 items-center justify-center rounded-full border border-dashed border-botanical/40 bg-botanical-light text-botanical sm:h-28 sm:w-28 md:h-32 md:w-32"
         >
-          <img
-            v-if="!herbariumLogoMissing"
-            src="/logos/herbario.png"
-            alt="Logo oficial do Herbário do Jarros (HBSRD)"
-            class="h-full w-full object-contain"
-            @error="herbariumLogoMissing = true"
-          />
           <svg
-            v-else
-            class="h-11 w-11 text-botanical sm:h-14 sm:w-14"
+            class="h-11 w-11 sm:h-14 sm:w-14"
             viewBox="0 0 36 36"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -78,16 +80,6 @@ const ufmaLogoMissing = ref(false);
               stroke-linejoin="round"
             />
             <circle cx="18" cy="7.5" r="2.2" fill="currentColor" />
-            <rect
-              x="3"
-              y="3"
-              width="30"
-              height="30"
-              rx="7"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-dasharray="3 2"
-            />
           </svg>
         </div>
 
